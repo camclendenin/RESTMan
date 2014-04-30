@@ -9,20 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
-
-extern NSString *const BASE_URL;
-
-typedef enum {
-    /** 
-     Example:
-     
-     AUTHOR,
-     BOOK,
-     REVIEW
-     */
-    NONE // Required
-} RESTFUL_OBJECT_TYPE;
-
+#import "RestMachineConfig.h"
 
 @interface RestMachine : NSObject
 
@@ -43,7 +30,7 @@ typedef enum {
  @param successBlock - A block object to be executed if the request completes successfully.
  @param failureBlock - A block object to be executed if the request fails.
  */
-- (void)getObjectsOfType:(RESTFUL_OBJECT_TYPE)type
++ (void)getObjectsOfType:(RESOURCE_TYPE)type
           withParameters:(NSDictionary *)params
                  success:(void(^)(id responseData))successBlock
                  failure:(void(^)(NSString *errorMessage))failureBlock;
@@ -59,7 +46,7 @@ typedef enum {
  @param successBlock - A block object to be executed if the request completes successfully.
  @param failureBlock - A block object to be executed if the request fails.
  */
-- (void)getObjectOfType:(RESTFUL_OBJECT_TYPE)type
++ (void)getObjectOfType:(RESOURCE_TYPE)type
                  withID:(NSString *)objectID
          withParameters:(NSDictionary *)params
                 success:(void(^)(id responseData))successBlock
@@ -81,9 +68,9 @@ typedef enum {
  @param successBlock - A block object to be executed if the request completes successfully.
  @param failureBlock - A block object to be executed if the request fails.
  */
-- (void)updateObjectOfType:(RESTFUL_OBJECT_TYPE)type
++ (void)updateObjectOfType:(RESOURCE_TYPE)type
                     withID:(NSString *)objectID
-            rootObjectType:(RESTFUL_OBJECT_TYPE)rootObjectType
+            rootObjectType:(RESOURCE_TYPE)rootObjectType
               rootObjectID:(NSString *)rootObjectID
             withParameters:(NSDictionary *)params
                    success:(void (^)(id responseData))successBlock
@@ -104,8 +91,8 @@ typedef enum {
  @param successBlock - A block object to be executed if the request completes successfully.
  @param failureBlock - A block object to be executed if the request fails.
  */
-- (void)createObjectOfType:(RESTFUL_OBJECT_TYPE)type
-            rootObjectType:(RESTFUL_OBJECT_TYPE)rootObjectType
++ (void)createObjectOfType:(RESOURCE_TYPE)type
+            rootObjectType:(RESOURCE_TYPE)rootObjectType
               rootObjectID:(NSString *)rootObjectID
             withParameters:(NSDictionary *)params
                    success:(void(^)(id responseData))successBlock
@@ -123,13 +110,15 @@ typedef enum {
                             For a single-resource path like /users set rootObjectType = NONE.
  
  @param rootObjectID - String id for the root object. Optional if there is no root object.
+ @param params       - An optional dictionary of params.
  @param successBlock - A block object to be executed if the request completes successfully.
  @param failureBlock - A block object to be executed if the request fails.
  */
-- (void)deleteObjectOfType:(RESTFUL_OBJECT_TYPE)type
++ (void)deleteObjectOfType:(RESOURCE_TYPE)type
                     withID:(NSString *)objectID
-            rootObjectType:(RESTFUL_OBJECT_TYPE)rootObjectType
+            rootObjectType:(RESOURCE_TYPE)rootObjectType
               rootObjectID:(NSString *)rootObjectID
+            withParameters:(NSDictionary *)params
                    success:(void (^)(id responseData))successBlock
                    failure:(void (^)(NSString *errorMessage))failureBlock;
 
