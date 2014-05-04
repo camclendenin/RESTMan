@@ -5,7 +5,6 @@
 //  Copyright (c) 2014 Cameron Clendenin. All rights reserved.
 
 #import "RestMachineAuthenticator.h"
-#import "AccountManager.h"
 
 @implementation RestMachineAuthenticator
 

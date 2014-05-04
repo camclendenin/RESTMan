@@ -1,12 +1,15 @@
 #!/bin/bash
 
 config=RestMachineConfig.h
+echo $config
 declare -a resources
 declare -a resoucePathNames
 declare -a resouceVarNames
 BASE_URL=""
-echo "#import <Foundation/Foundation.h>\n\ntypedef enum {\n\tNONE," > $config
-
+echo "#import <Foundation/Foundation.h>" > $config
+echo "" >> $config
+echo "typedef enum {" >> $config
+echo "    NONE," >> $config
 # get user-defined resources from plist
 echo "RestMachine has started..."
 echo "Adding support for..."
@@ -42,16 +45,17 @@ done < RestMachine.plist
 # build enums
 for i in ${!resources[@]}; do
     upcase=`echo "${resources[i]}" | tr '[:lower:]' '[:upper:]'`
-    upcase="\t$upcase"
+    upcase="$upcase"
     if [ $(($i + 1)) -lt ${#resources[@]} ]; then	
     	upcase="$upcase,"
     fi
-    echo $upcase >> $config
+    echo "    ${upcase}" >> $config
 done
 
-echo "} RESOURCE_TYPE;\n" >> $config
-
-echo "static NSString* RMBaseURL = @\"$BASE_URL\";\n" >> $config
+echo "} RESOURCE_TYPE;" >> $config
+echo "" >> $config
+echo "static NSString* RMBaseURL = @\"$BASE_URL\";" >> $config
+echo ""
 
 # define contant types
 for i in ${!resources[@]}; do
@@ -60,12 +64,14 @@ for i in ${!resources[@]}; do
     capResource="$(tr '[:lower:]' '[:upper:]' <<< ${res:0:1})${res:1}"
     resourceVarNames[${#resourceVarNames[@]}]="RM$capResource"
     declaration="static NSString*"
-    echo "$declaration RM$capResource = @\"$pathName\";\n" >> $config
+    echo "$declaration RM$capResource = @\"$pathName\";" >> $config
 done
 
 joined="$(IFS=,; echo "${resourceVarNames[*]}")"
+echo "" >> $config
 echo "#define MR_RESOURCES @[$joined]" >> $config
-echo "\n@interface RestMachineConfig\n@end" >> $config
+echo "" >> $config
+echo "@interface RestMachineConfig @end" >> $config
 
  
 echo " $(tput setaf 2)RestMachine setup is complete."
