@@ -18,7 +18,7 @@ Copy the RestMachine folder into your Xcode project (make sure the "Copy items..
 Open RestMachine.plist within your project.
 
 #### Base URL
-For "Base URL", set the value as the base url of your applications web service.
+For `Base URL`, set the value as the base url of your applications web service.
 
   ![Example plist](https://dl.dropbox.com/s/hem7iggve7688gs/rest-machine-screen1.png)
 
@@ -42,7 +42,7 @@ Go to the `Build Phases` tab for your target and add a `New Run Script Build Pha
 
 ![Add Script](https://dl.dropbox.com/s/9cpy4nuhwihn67m/rest-machine-add-build-script.png)
     
-Add the following text to as the script...
+Add the following text to the the script area...
 
     cd "${SRCROOT}/${PROJECT_NAME}/RestMachine"
     /bin/sh "rest-machine.sh"
@@ -54,7 +54,7 @@ It should now look like this:
 
 **You're done!**
 
-This script will automatically pull in your settings from `RestMachine.plist` and generate your endpoints each time your project builds.
+This script will automatically pull in your settings from `RestMachine.plist` and generate your endpoints each time your project builds. Hit `CMD-B` and then checkout `RestMachineConfig.h` to see your generated config file.
 
 #### Authentication
 
