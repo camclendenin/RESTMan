@@ -48,12 +48,12 @@ Or...
 
 Go to the `Build Phases` tab for your target and add a `New Run Script Build Phase`
 
-![Add Script](https://dl.dropbox.com/s/9cpy4nuhwihn67m/rest-machine-add-build-script.png)
+![Add Script](https://dl.dropbox.com/s/ot10lj4fa9qgrov/restman_run_script.png)
     
 Add the following text to the the script area...
 
-    cd "${SRCROOT}/${PROJECT_NAME}/RESTMan"
-    /bin/sh "restman.sh"
+    cd "${SRCROOT}/${PROJECT_NAME}/RESTMan/RESTMan"
+    /bin/sh "restman-generator.sh"
 
 It should now look like this:
 
@@ -87,5 +87,10 @@ Check out *RESTMan.h* too see all of the methods available to you and to see mor
 ## Requirements
 
 [AFNetworking 2.0](https://github.com/AFNetworking/AFNetworking)
+
+
+### Coming soon
+
+- Cocoapods support
 
 
