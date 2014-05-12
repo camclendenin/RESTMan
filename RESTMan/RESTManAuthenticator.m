@@ -1,12 +1,12 @@
 //
-//  RestMachineAuthenticator.m
+//  RESTManAuthenticator.m
 //
 //  Created by Cameron Clendenin on 4/29/14.
 //  Copyright (c) 2014 Cameron Clendenin. All rights reserved.
 
-#import "RestMachineAuthenticator.h"
+#import "RESTManAuthenticator.h"
 
-@implementation RestMachineAuthenticator
+@implementation RESTManAuthenticator
 
 + (NSString *)authenticatedPathWithPath:(NSString *)path {
 

@@ -1,5 +1,5 @@
 //
-//  RestMachine.h
+//  RESTMan.h
 //
 //  Created by Cameron Clendenin on 2/12/14.
 //  Copyright (c) 2014 Cameron Clendenin. All rights reserved.
@@ -9,16 +9,16 @@
 
 #import <Foundation/Foundation.h>
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
-#import "RestMachineConfig.h"
+#import "RESTManConfig.h"
 
-@interface RestMachine : NSObject
+@interface RESTMan : NSObject
 
 @property (nonatomic, strong, readonly) AFHTTPRequestOperationManager *AFRequestManager;
 
 /** 
  Returns a singleton instance
  */
-+ (RestMachine *)sharedInstance;
++ (RESTMan *)sharedInstance;
 
 
 /**

@@ -1,21 +1,29 @@
-rest-machine
+RESTMan
 ============
 
-A lightweight iOS framework for communicating with RESTful web services.
+RESTMan lets you easily interact with RESTful (GET, POST, PUT, DELETE) web APIs by allowing you to work with **objects instead of URLs**. No messy in-line URLs to maintain.
 
-### Why?
+    [RESTMan createObjectOfType:USER 
+                rootObjectType:NONE 
+                  rootObjectID:nil 
+                withParameters:@{@"email" : @"user@example.com", @"password" : @"some_password"}  
+                       success:^(id responseData) {
+                          // successful request.
+                     } failure:^(NSString *errorMessage) {
+                          // handle error here.
+                     }];
 
-There can be a lot of stupid boiler-plate code that needs to be written when integrating web services to a mobile app. RestMachine lets you add networking capabilities to a project in about 1 minute — all without writing any code.
+Define all of your endpoints in a single plist file and let RESTMan do the rest. RESTman uses ARC and is built on top of `AFNetworking`, but adds a layer of simplicity that lets you write more maintainable code.
 
 ## Getting Started
 
 ### Installation
 
-Copy the RestMachine folder into your Xcode project (make sure the "Copy items..." box is selected).
+Copy the RESTMan folder into your Xcode project (make sure the "Copy items..." box is selected).
 
 ### Set Up
 
-Open RestMachine.plist within your project.
+Open RESTMan.plist within your project.
 
 #### Base URL
 For `Base URL`, set the value as the base url of your applications web service.
@@ -44,8 +52,8 @@ Go to the `Build Phases` tab for your target and add a `New Run Script Build Pha
     
 Add the following text to the the script area...
 
-    cd "${SRCROOT}/${PROJECT_NAME}/RestMachine"
-    /bin/sh "rest-machine.sh"
+    cd "${SRCROOT}/${PROJECT_NAME}/RESTMan"
+    /bin/sh "restman.sh"
 
 It should now look like this:
 
@@ -54,29 +62,30 @@ It should now look like this:
 
 **You're done!**
 
-This script will automatically pull in your settings from `RestMachine.plist` and generate your endpoints each time your project builds. Hit `CMD-B` and then checkout `RestMachineConfig.h` to see your generated config file.
+This script will automatically pull in your settings from `RESTMan.plist` and generate your endpoints each time your project builds. Hit `CMD-B` and then checkout `RESTManConfig.h` to see your generated config file.
 
 #### Authentication
 
-RestMachine lets you add your applications auth logic via the RestMachineAuthentication.h file. 
+RESTMan lets you add your applications custom authentication logic via the RESTManAuthentication.h file. 
 To do this you will need to modify the implementation of the *authenticatedPath* method.
 
 ### Usage
 
-Import RestMachine wherever you need to make API calls.
+Import RESTMan wherever you need to make API calls.
 
-    #import "RestMachine.h"
+    #import "RESTMan.h"
 
-Use the public methods in *RestMachine.h* to easily get what you need from your web service.
+Use the public methods in *RESTMan.h* to easily get what you need from your web service.
 
     + (void)getObjectsOfType:(RESOURCE_TYPE)type
           withParameters:(NSDictionary *)params
                  success:(void(^)(id responseData))successBlock
                  failure:(void(^)(NSString *errorMessage))failureBlock;
 
-Check out *RestMachine.h* too see all of the methods available to you and to see more documentation.
+Check out *RESTMan.h* too see all of the methods available to you and to see more documentation.
 
 ## Requirements
 
 [AFNetworking 2.0](https://github.com/AFNetworking/AFNetworking)
+
 

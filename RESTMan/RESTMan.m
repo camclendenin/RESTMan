@@ -1,12 +1,12 @@
 //
-//  RestMachine.m
+//  RESTMan.m
 //
 //  Created by Cameron Clendenin on 2/12/14.
 //  Copyright (c) 2014 Cameron Clendenin. All rights reserved.
 //
 
-#import "RestMachine.h"
-#import "RestMachineAuthenticator.h"
+#import "RESTMan.h"
+#import "RESTManAuthenticator.h"
 
 #ifdef DEBUG
 #   define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
@@ -14,14 +14,14 @@
 #   define DLog(...)
 #endif
 
-@interface RestMachine ()
+@interface RESTMan ()
 
 @end
 
 
-@implementation RestMachine
+@implementation RESTMan
 
-+ (RestMachine *)sharedInstance {
++ (RESTMan *)sharedInstance {
     static dispatch_once_t once;
     static id instance;
     dispatch_once(&once, ^{
@@ -46,7 +46,7 @@
                  success:(void(^)(id))successBlock
                  failure:(void(^)(NSString *))failureBlock
 {
-    [[RestMachine sharedInstance] getObjectsOfType:type
+    [[RESTMan sharedInstance] getObjectsOfType:type
                                     withParameters:params
                                         successful:successBlock
                                             failed:failureBlock];
@@ -58,7 +58,7 @@
                 success:(void(^)(id))successBlock
                 failure:(void(^)(NSString *))failureBlock
 {
-    [[RestMachine sharedInstance] getObjectOfType:type
+    [[RESTMan sharedInstance] getObjectOfType:type
                                            withID:objectID
                                    withParameters:params
                                           success:successBlock
@@ -73,7 +73,7 @@
                    success:(void(^)(id))successBlock
                    failure:(void(^)(NSString *))failureBlock
 {
-    [[RestMachine sharedInstance] updateObjectOfType:type
+    [[RESTMan sharedInstance] updateObjectOfType:type
                                               withID:objectID
                                       rootObjectType:rootObjectType
                                         rootObjectID:rootObjectID
@@ -89,7 +89,7 @@
                    success:(void(^)(id))successBlock
                    failure:(void(^)(NSString *))failureBlock
 {
-    [[RestMachine sharedInstance] createObjectOfType:type
+    [[RESTMan sharedInstance] createObjectOfType:type
                                       withParameters:params
                                       rootObjectType:rootObjectType
                                         rootObjectID:rootObjectID
@@ -105,7 +105,7 @@
                    success:(void(^)(id))successBlock
                    failure:(void(^)(NSString *))failureBlock
 {
-    [[RestMachine sharedInstance] deleteObjectOfType:type
+    [[RESTMan sharedInstance] deleteObjectOfType:type
                                               withID:objectID
                                       rootObjectType:rootObjectType
                                         rootObjectID:rootObjectID
@@ -126,9 +126,9 @@
     NSString *subPath = [self stringForResource:type];
     NSString *path = [RMBaseURL stringByAppendingPathComponent:subPath];
     
-    DLog(@"[ GET ] %@", [RestMachineAuthenticator authenticatedPathWithPath:path]);
+    DLog(@"[ GET ] %@", [RESTManAuthenticator authenticatedPathWithPath:path]);
     
-    [self.AFRequestManager GET:[RestMachineAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.AFRequestManager GET:[RESTManAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failureBlock(error.localizedDescription);
@@ -145,9 +145,9 @@
     NSString *subPath = [[self stringForResource:type] stringByAppendingPathComponent:objectID];
     NSString *path = [RMBaseURL stringByAppendingPathComponent:subPath];
     
-    DLog(@"[ GET ] %@", [RestMachineAuthenticator authenticatedPathWithPath:path]);
+    DLog(@"[ GET ] %@", [RESTManAuthenticator authenticatedPathWithPath:path]);
     
-    [self.AFRequestManager GET:[RestMachineAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.AFRequestManager GET:[RESTManAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failureBlock(error.localizedDescription);
@@ -166,9 +166,9 @@
     NSString *subPath = [[self subPathForResource:rootObjectType objectID:rootObjectID] stringByAppendingPathComponent:[self subPathForResource:type objectID:objectID]];
     NSString *path = [RMBaseURL stringByAppendingPathComponent:subPath];
     
-    DLog(@"[ PUT ] %@ [params] %@", [RestMachineAuthenticator authenticatedPathWithPath:path], params);
+    DLog(@"[ PUT ] %@ [params] %@", [RESTManAuthenticator authenticatedPathWithPath:path], params);
     
-    [self.AFRequestManager PUT:[RestMachineAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.AFRequestManager PUT:[RESTManAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failureBlock(error.localizedDescription);
@@ -187,9 +187,9 @@
     NSString *subPath = [[self subPathForResource:rootObjectType objectID:rootObjectID] stringByAppendingPathComponent:[self stringForResource:type]];
     NSString *path = [RMBaseURL stringByAppendingPathComponent:subPath];
     
-    DLog(@"[ POST ] %@ [params] %@", [RestMachineAuthenticator authenticatedPathWithPath:path], params);
+    DLog(@"[ POST ] %@ [params] %@", [RESTManAuthenticator authenticatedPathWithPath:path], params);
     
-    [self.AFRequestManager POST:[RestMachineAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.AFRequestManager POST:[RESTManAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failureBlock(error.localizedDescription);
@@ -208,9 +208,9 @@
     NSString *subPath = [[self subPathForResource:rootObjectType objectID:rootObjectID] stringByAppendingPathComponent:[self subPathForResource:type objectID:objectID]];
     NSString *path = [RMBaseURL stringByAppendingPathComponent:subPath];
 
-    DLog(@"[ DELETE ] %@", [RestMachineAuthenticator authenticatedPathWithPath:path]);
+    DLog(@"[ DELETE ] %@", [RESTManAuthenticator authenticatedPathWithPath:path]);
     
-    [self.AFRequestManager DELETE:[RestMachineAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.AFRequestManager DELETE:[RESTManAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failureBlock(error.localizedDescription);
@@ -222,7 +222,7 @@
 #pragma mark - Path Helpers
 
 - (NSString *)stringForResource:(RESOURCE_TYPE)type {
-    return (type == NONE) ? @"" : [MR_RESOURCES objectAtIndex:--type];
+    return (type == NONE) ? @"" : [RM_RESOURCES objectAtIndex:--type];
 }
 
 - (NSString *)subPathForResource:(RESOURCE_TYPE)type objectID:(NSString *)objectID {

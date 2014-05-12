@@ -1,5 +1,5 @@
 //
-//  RestMachineAuthenticator.h
+//  RESTManAuthenticator.h
 //
 //  Created by Cameron Clendenin on 4/29/14.
 //  Copyright (c) 2014 Cameron Clendenin. All rights reserved.
@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RestMachineAuthenticator : NSObject
+@interface RESTManAuthenticator : NSObject
 
 /**
  Returns a url string path with your applictions auth logic.

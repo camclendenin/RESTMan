@@ -1,6 +1,6 @@
 #!/bin/bash
 
-config=RestMachineConfig.h
+config=RESTManConfig.h
 echo $config
 declare -a resources
 declare -a resoucePathNames
@@ -11,7 +11,7 @@ echo "" >> $config
 echo "typedef enum {" >> $config
 echo "    NONE," >> $config
 # get user-defined resources from plist
-echo "RestMachine has started..."
+echo "RESTMan has started..."
 echo "Adding support for..."
 while read line           
 do           
@@ -40,7 +40,7 @@ do
         fi 
         echo "...$p1"
     fi
-done < RestMachine.plist
+done < RESTMan.plist
 
 # build enums
 for i in ${!resources[@]}; do
@@ -69,10 +69,10 @@ done
 
 joined="$(IFS=,; echo "${resourceVarNames[*]}")"
 echo "" >> $config
-echo "#define MR_RESOURCES @[$joined]" >> $config
+echo "#define RM_RESOURCES @[$joined]" >> $config
 echo "" >> $config
-echo "@interface RestMachineConfig @end" >> $config
+echo "@interface RESTManConfig @end" >> $config
 
  
-echo " $(tput setaf 2)RestMachine setup is complete."
+echo " $(tput setaf 2)RESTMan setup is complete."
 echo " $(tput sgr0)$config has been updated."
