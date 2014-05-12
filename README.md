@@ -48,7 +48,7 @@ Or...
 
 Go to the `Build Phases` tab for your target and add a `New Run Script Build Phase`
 
-![Add Script](https://dl.dropbox.com/s/ot10lj4fa9qgrov/restman_run_script.png)
+![Add Script](https://dl.dropbox.com/s/9cpy4nuhwihn67m/rest-machine-add-build-script.png)
     
 Add the following text to the the script area...
 
@@ -57,8 +57,7 @@ Add the following text to the the script area...
 
 It should now look like this:
 
-![Edit Script](https://dl.dropbox.com/s/j59njlthu4z37a5/rest-machine-edit-build-script.png)
-
+![Edit Script](https://dl.dropbox.com/s/ot10lj4fa9qgrov/restman_run_script.png)
 
 **You're done!**
 
