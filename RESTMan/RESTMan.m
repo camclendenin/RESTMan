@@ -53,25 +53,25 @@
 }
 
 + (void)getNestedObjectsOfType:(RESOURCE_TYPE)nestedType
-                rootObjectType:(RESOURCE_TYPE)rootType
-                  rootObjectID:(NSString *)rootObjectID
-                    parameters:(NSDictionary *)params
-                       success:(void(^)(id))successBlock
-                       failure:(void(^)(NSString *))failureBlock
+              onRootObjectOfType:(RESOURCE_TYPE)rootType
+                          withID:(NSString *)rootID
+                      parameters:(NSDictionary *)params
+                         success:(void(^)(id responseData))successBlock
+                         failure:(void(^)(NSString *errorMessage))failureBlock
 {
     [[RESTMan sharedInstance] getNestedObjectsOfType:nestedType
                                   onRootObjectOfType:rootType
-                                              withID:rootObjectID
+                                              withID:rootID
                                           parameters:params
                                              success:successBlock
                                              failure:failureBlock];
 }
 
 + (void)getObjectOfType:(RESOURCE_TYPE)type
-                 andID:(NSString *)objectID
-         withParameters:(NSDictionary *)params
-                success:(void(^)(id))successBlock
-                failure:(void(^)(NSString *))failureBlock
+                 withID:(NSString *)objectID
+             parameters:(NSDictionary *)params
+                success:(void(^)(id responseData))successBlock
+                failure:(void(^)(NSString *errorMessage))failureBlock
 {
     [[RESTMan sharedInstance] getObjectOfType:type
                                        withID:objectID

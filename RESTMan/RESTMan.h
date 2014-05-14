@@ -4,7 +4,7 @@
 //  Created by Cameron Clendenin on 2/12/14.
 //  Copyright (c) 2014 Cameron Clendenin. All rights reserved.
 //
-//  RestMachine is built on top of the wonderful AFNetworking framework and
+//  RESTMan is built on top of the wonderful AFNetworking framework and
 //  makes it crazy simple to work with well designed RESTful web services.
 
 #import <Foundation/Foundation.h>
