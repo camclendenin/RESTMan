@@ -3,15 +3,12 @@ RESTMan
 
 RESTMan lets you easily interact with RESTful (GET, POST, PUT, DELETE) web APIs by allowing you to work with **objects instead of URLs**. No messy in-line URLs to maintain.
 
-    [RESTMan createObjectOfType:USER 
-                rootObjectType:NONE 
-                  rootObjectID:nil 
-                withParameters:@{@"email" : @"user@example.com", @"password" : @"some_password"}  
-                       success:^(id responseData) {
-                          // successful request.
-                     } failure:^(NSString *errorMessage) {
-                          // handle error here.
-                     }];
+    [RESTMan getObjectOfType:BOOK withID:@"1234" parameters:nil success:^(id responseData) {
+        // do something with the book.
+        id book = [responseData objectForKey:@"book"];
+    } failure:^(NSString *errorMessage) {
+        // handle error however you like.
+    }];
 
 Define all of your endpoints in a single plist file and let RESTMan do the rest. RESTman uses ARC and is built on top of `AFNetworking`, but adds a layer of simplicity that lets you write more maintainable code.
 
@@ -23,26 +20,36 @@ Copy the RESTMan folder into your Xcode project (make sure the "Copy items..." b
 
 ### Set Up
 
-Open RESTMan.plist within your project.
+Open RESTMan.plist within your project. This file will be used to generate all of the endpoints used in your API.
 
-#### Base URL
+##### Base URL
 For `Base URL`, set the value as the base url of your applications web service.
 
   ![Example plist](https://dl.dropbox.com/s/hem7iggve7688gs/rest-machine-screen1.png)
 
-#### Endpoints
+##### Resources
 
-Define all of your endpoints via `Resources`.  Add a new row for each resource used in your web service. Resources should be defined in the singular form.
+Define all of your endpoints via `Resources`.  Add a new row for each resource in your web API that you want to use. Here is an example:
+
+    user#users
+
+The *first* part before the `#` defines the way you want to reference the object throughout your project. The *second* part **after** the `#` should be the corresponding path name used by your API. In the example above, this will allow to refer refer to USER when using RESTMan, meanwhile under-the-hood RESTMan will generate URLs that use the `/users` path.
 
   ![Example plist](https://dl.dropbox.com/s/cl2yy3ofopcqw1n/rest-machine-screen2.png)
 
-If your web service uses the plural form of a resource, use a *#* followed by the plural form. For example:
+In addition, RESTMan can support different kinds of nested paths. For example, if your APIs path for login is something like `/auth/users/login`, where it is just a serious of nested paths with no IDs, you could do something like this.
 
-    story#stories
+    session#auth/users/login
+    
+This would allow to make the following call using RESTMan...
 
-Or...
-
-    you#can/also/use/nested/paths
+    [RESTMan createObjectOfType:SESSION parameters:loginCredentials success:^(id responseData) {
+        // get token from response data, ect...
+    } failure:^(NSString *errorMessage) {
+        // handle invalid credentials, ect...
+    }];
+    
+For nested paths that combine 2 resources, use the RESTMan class methods that accept *nested* and *root* object types. See the documentation in RESTMan.h for the details, or just jump right in and start using it bc it's awesome.
 
 #### Modify build phases
 
