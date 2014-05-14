@@ -37,7 +37,7 @@ The *first* part before the `#` defines the way you want to reference the object
 
   ![Example plist](https://dl.dropbox.com/s/cl2yy3ofopcqw1n/rest-machine-screen2.png)
 
-In addition, RESTMan can support different kinds of nested paths. For example, if your APIs path for login is something like `/auth/users/login`, where it is just a serious of nested paths with no IDs, you could do something like this.
+In addition, RESTMan can support different kinds of nested paths. For example, if your APIs path for login is something like `POST /auth/users/login`, where it is just a series of nested resources without IDs, you could do something like this.
 
     session#auth/users/login
     
