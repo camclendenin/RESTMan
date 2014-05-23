@@ -18,6 +18,21 @@ Define all of your endpoints in a single plist file and let RESTMan do the rest.
 
 Copy the RESTMan folder into your Xcode project (make sure the "Copy items..." box is selected).
 
+#### Modify build phases
+
+Go to the `Build Phases` tab for your target and add a `New Run Script Build Phase`
+
+![Add Script](https://dl.dropbox.com/s/9cpy4nuhwihn67m/rest-machine-add-build-script.png)
+    
+Add the following text to the the script area...
+
+    cd "${SRCROOT}/${PROJECT_NAME}/RESTMan/RESTMan"
+    /bin/sh "restman-generator.sh"
+
+It should now look like this:
+
+![Edit Script](https://dl.dropbox.com/s/ot10lj4fa9qgrov/restman_run_script.png)
+
 ### Set Up
 
 Open RESTMan.plist within your project. This file will be used to generate all of the endpoints used in your API.
@@ -44,27 +59,13 @@ In addition, RESTMan can support different kinds of nested paths. For example, i
 This would allow to make the following call using RESTMan...
 
     [RESTMan createObjectOfType:SESSION parameters:loginCredentials success:^(id responseData) {
-        // get token from response data, ect...
+        // get token from response data, etc...
     } failure:^(NSString *errorMessage) {
-        // handle invalid credentials, ect...
+        // handle invalid credentials, etc...
     }];
     
 For nested paths that combine 2 resources, use the RESTMan class methods that accept *nested* and *root* object types. See the documentation in RESTMan.h for the details, or just jump right in and start using it bc it's awesome.
 
-#### Modify build phases
-
-Go to the `Build Phases` tab for your target and add a `New Run Script Build Phase`
-
-![Add Script](https://dl.dropbox.com/s/9cpy4nuhwihn67m/rest-machine-add-build-script.png)
-    
-Add the following text to the the script area...
-
-    cd "${SRCROOT}/${PROJECT_NAME}/RESTMan/RESTMan"
-    /bin/sh "restman-generator.sh"
-
-It should now look like this:
-
-![Edit Script](https://dl.dropbox.com/s/ot10lj4fa9qgrov/restman_run_script.png)
 
 **You're done!**
 
