@@ -1,8 +1,8 @@
 #import <Foundation/Foundation.h>
 
-typedef enum {
-    NONE,
-} RESOURCE_TYPE;
+typedef NS_ENUM(NSInteger, RESOURCE_TYPE) {
+    NONE
+};
 
 static NSString* RMBaseURL = @"";
 

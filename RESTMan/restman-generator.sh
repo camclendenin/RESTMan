@@ -8,7 +8,7 @@ declare -a resouceVarNames
 BASE_URL=""
 echo "#import <Foundation/Foundation.h>" > $config
 echo "" >> $config
-echo "typedef enum {" >> $config
+echo "typedef NS_ENUM(NSInteger, RESOURCE_TYPE) {" >> $config
 echo "    NONE," >> $config
 # get user-defined resources from plist
 echo "RESTMan has started..."
@@ -52,7 +52,7 @@ for i in ${!resources[@]}; do
     echo "    ${upcase}" >> $config
 done
 
-echo "} RESOURCE_TYPE;" >> $config
+echo "};" >> $config
 echo "" >> $config
 echo "static NSString* RMBaseURL = @\"$BASE_URL\";" >> $config
 echo ""
