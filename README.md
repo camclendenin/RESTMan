@@ -96,8 +96,10 @@ Check out [*RESTMan.h*](https://github.com/camclendenin/RESTMan/blob/master/REST
 [AFNetworking 2.0](https://github.com/AFNetworking/AFNetworking)
 
 
-### Coming soon
+### TODOs
 
 - Cocoapods support
+- More robust failure blocks
+- Handling different types of authentication
 
 
