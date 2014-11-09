@@ -89,7 +89,7 @@ Use the public methods in *RESTMan.h* to easily get what you need from your web 
                  success:(void(^)(id responseData))successBlock
                  failure:(void(^)(NSString *errorMessage))failureBlock;
 
-Check out *RESTMan.h* too see all of the methods available to you and to see more documentation.
+Check out [*RESTMan.h*](https://github.com/camclendenin/RESTMan/blob/master/RESTMan/RESTMan.h) too see all of the methods available to you and to see more documentation.
 
 ## Requirements
 
