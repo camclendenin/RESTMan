@@ -3,12 +3,14 @@ RESTMan
 
 RESTMan lets you easily interact with RESTful (GET, POST, PUT, DELETE) web APIs by allowing you to work with **objects instead of URLs**. No messy in-line URLs to maintain.
 
-    [RESTMan getObjectOfType:BOOK withID:@"1234" parameters:nil success:^(id responseData) {
-        // do something with the book.
-        id book = [responseData objectForKey:@"book"];
-    } failure:^(NSString *errorMessage) {
-        // handle error however you like.
-    }];
+```objective-c
+[RESTMan getObjectOfType:BOOK withID:@"1234" parameters:nil success:^(id responseData) {
+    // do something with the book.
+    id book = [responseData objectForKey:@"book"];
+} failure:^(NSString *errorMessage) {
+    // handle error however you like.
+}];
+```
 
 Define all of your endpoints in a single plist file and let RESTMan do the rest. RESTman uses ARC and is built on top of `AFNetworking`, but adds a layer of simplicity that lets you write more maintainable code.
 
@@ -58,11 +60,13 @@ In addition, RESTMan can support different kinds of nested paths. For example, i
     
 This would allow to make the following call using RESTMan...
 
-    [RESTMan createObjectOfType:SESSION parameters:loginCredentials success:^(id responseData) {
-        // get token from response data, etc...
-    } failure:^(NSString *errorMessage) {
-        // handle invalid credentials, etc...
-    }];
+```objective-c
+[RESTMan createObjectOfType:SESSION parameters:loginCredentials success:^(id responseData) {
+    // get token from response data, etc...
+} failure:^(NSString *errorMessage) {
+    // handle invalid credentials, etc...
+}];
+```
     
 For nested paths that combine 2 resources, use the RESTMan class methods that accept *nested* and *root* object types. See the documentation in RESTMan.h for the details, or just jump right in and start using it bc it's awesome.
 
@@ -84,10 +88,12 @@ Import RESTMan wherever you need to make API calls.
 
 Use the public methods in *RESTMan.h* to easily get what you need from your web service.
 
-    + (void)getObjectsOfType:(RESOURCE_TYPE)type
-          withParameters:(NSDictionary *)params
-                 success:(void(^)(id responseData))successBlock
-                 failure:(void(^)(NSString *errorMessage))failureBlock;
+```objective-c
++ (void)getObjectsOfType:(RESOURCE_TYPE)type
+      withParameters:(NSDictionary *)params
+             success:(void(^)(id responseData))successBlock
+             failure:(void(^)(NSString *errorMessage))failureBlock;
+````
 
 Check out [*RESTMan.h*](https://github.com/camclendenin/RESTMan/blob/master/RESTMan/RESTMan.h) too see all of the methods available to you and to see more documentation.
 
