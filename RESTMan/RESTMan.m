@@ -44,7 +44,7 @@
 + (void)getObjectsOfType:(RESOURCE_TYPE)type
               parameters:(NSDictionary *)params
                  success:(void(^)(id))successBlock
-                 failure:(void(^)(NSString *))failureBlock
+                 failure:(void(^)(AFHTTPRequestOperation *, NSError *))failureBlock
 {
     [[RESTMan sharedInstance] getObjectsOfType:type
                                 withParameters:params
@@ -56,8 +56,8 @@
               onRootObjectOfType:(RESOURCE_TYPE)rootType
                           withID:(NSString *)rootID
                       parameters:(NSDictionary *)params
-                         success:(void(^)(id responseData))successBlock
-                         failure:(void(^)(NSString *errorMessage))failureBlock
+                         success:(void(^)(id))successBlock
+                         failure:(void(^)(AFHTTPRequestOperation *, NSError *))failureBlock
 {
     [[RESTMan sharedInstance] getNestedObjectsOfType:nestedType
                                   onRootObjectOfType:rootType
@@ -70,8 +70,8 @@
 + (void)getObjectOfType:(RESOURCE_TYPE)type
                  withID:(NSString *)objectID
              parameters:(NSDictionary *)params
-                success:(void(^)(id responseData))successBlock
-                failure:(void(^)(NSString *errorMessage))failureBlock
+                success:(void(^)(id))successBlock
+                failure:(void(^)(AFHTTPRequestOperation *, NSError *))failureBlock
 {
     [[RESTMan sharedInstance] getObjectOfType:type
                                        withID:objectID
@@ -86,7 +86,7 @@
                        withID:(NSString *)rootID
                    parameters:(NSDictionary *)params
                       success:(void (^)(id))successBlock
-                      failure:(void (^)(NSString *))failureBlock
+                      failure:(void (^)(AFHTTPRequestOperation *, NSError *))failureBlock
 {
     [[RESTMan sharedInstance] getNestedObjectOfType:nestedType
                                              withID:nestedID
@@ -101,7 +101,7 @@
                     withID:(NSString *)objectID
                 parameters:(NSDictionary *)params
                    success:(void (^)(id))successBlock
-                   failure:(void (^)(NSString *))failureBlock
+                   failure:(void (^)(AFHTTPRequestOperation *, NSError *))failureBlock
 {
     [[RESTMan sharedInstance] updateObjectOfType:type
                                           withID:objectID
@@ -116,7 +116,7 @@
                           withID:(NSString *)rootID
                       parameters:(NSDictionary *)params
                          success:(void (^)(id))successBlock
-                         failure:(void (^)(NSString *))failureBlock
+                         failure:(void (^)(AFHTTPRequestOperation *, NSError *))failureBlock
 {
     [[RESTMan sharedInstance] updateNestedObjectOfType:nestedType
                                                 withID:nestedID
@@ -130,7 +130,7 @@
 + (void)createObjectOfType:(RESOURCE_TYPE)type
                 parameters:(NSDictionary *)params
                    success:(void (^)(id))successBlock
-                   failure:(void (^)(NSString *))failureBlock
+                   failure:(void (^)(AFHTTPRequestOperation *, NSError *))failureBlock
 {
     [[RESTMan sharedInstance] createObjectOfType:type
                                       parameters:params
@@ -143,7 +143,7 @@
                           withID:(NSString *)rootID
                       parameters:(NSDictionary *)params
                          success:(void (^)(id))successBlock
-                         failure:(void (^)(NSString *))failureBlock
+                         failure:(void (^)(AFHTTPRequestOperation *, NSError *))failureBlock
 {
     [[RESTMan sharedInstance] createNestedObjectOfType:nestedType
                                     onRootObjectOfType:rootType
@@ -157,7 +157,7 @@
                     withID:(NSString *)objectID
                 parameters:(NSDictionary *)params
                    success:(void (^)(id))successBlock
-                   failure:(void (^)(NSString *))failureBlock
+                   failure:(void (^)(AFHTTPRequestOperation *, NSError *))failureBlock
 {
     [[RESTMan sharedInstance] deleteObjectOfType:type
                                           withID:objectID
@@ -172,7 +172,7 @@
                           withID:(NSString *)rootID
                       parameters:(NSDictionary *)params
                          success:(void (^)(id))successBlock
-                         failure:(void (^)(NSString *))failureBlock
+                         failure:(void (^)(AFHTTPRequestOperation *, NSError *))failureBlock
 {
     [[RESTMan sharedInstance] deleteNestedObjectOfType:nestedType
                                                 withID:nestedID
@@ -183,13 +183,13 @@
                                                failure:failureBlock];
 }
 
-#pragma mark - Private methods
+#pragma mark - Private
 
 
 - (void)getObjectsOfType:(RESOURCE_TYPE)type
           withParameters:(NSDictionary *)params
               successful:(void (^)(id responseData))successBlock
-                  failed:(void (^)(NSString *errorMessage))failureBlock
+                  failed:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock
 {
     NSString *subPath = [self stringForResource:type];
     NSString *path = [RMBaseURL stringByAppendingPathComponent:subPath];
@@ -199,7 +199,7 @@
     [self.AFRequestManager GET:[RESTManAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failureBlock(error.localizedDescription);
+        failureBlock(operation, error);
     }];
 }
 
@@ -208,7 +208,7 @@
                         withID:(NSString *)rootID
                     parameters:(NSDictionary *)params
                        success:(void(^)(id responseData))successBlock
-                       failure:(void(^)(NSString *errorMessage))failureBlock
+                       failure:(void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock
 {
     NSString *subPath = [[self subPathForResource:rootType objectID:rootID] stringByAppendingPathComponent:[self stringForResource:nestedType]];
     NSString *path = [RMBaseURL stringByAppendingPathComponent:subPath];
@@ -218,16 +218,15 @@
     [self.AFRequestManager GET:[RESTManAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failureBlock(error.localizedDescription);
+        failureBlock(operation, error);
     }];
-
 }
 
 - (void)getObjectOfType:(RESOURCE_TYPE)type
                  withID:(NSString *)objectID
          withParameters:(NSDictionary *)params
                 success:(void (^)(id responseData))successBlock
-                failure:(void (^)(NSString *errorMessage))failureBlock
+                   failure:(void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock
 {
     NSString *subPath = [[self stringForResource:type] stringByAppendingPathComponent:objectID];
     NSString *path = [RMBaseURL stringByAppendingPathComponent:subPath];
@@ -237,7 +236,7 @@
     [self.AFRequestManager GET:[RESTManAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failureBlock(error.localizedDescription);
+        failureBlock(operation, error);
     }];
 }
 
@@ -247,7 +246,7 @@
                        withID:(NSString *)rootID
                    parameters:(NSDictionary *)params
                       success:(void(^)(id responseData))successBlock
-                      failure:(void(^)(NSString *errorMessage))failureBlock
+                      failure:(void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock
 {
     NSString *subPath = [[self subPathForResource:rootType objectID:rootID] stringByAppendingPathComponent:[self subPathForResource:nestedType objectID:nestedID]];
     NSString *path = [RMBaseURL stringByAppendingPathComponent:subPath];
@@ -257,7 +256,7 @@
     [self.AFRequestManager GET:[RESTManAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failureBlock(error.localizedDescription);
+        failureBlock(operation, error);
     }];
 }
 
@@ -265,7 +264,7 @@
                     withID:(NSString *)objectID
                 parameters:(NSDictionary *)params
                    success:(void (^)(id responseData))successBlock
-                   failure:(void (^)(NSString *errorMessage))failureBlock
+                      failure:(void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock
 {
     NSString *subPath = [self subPathForResource:type objectID:objectID];
     NSString *path = [RMBaseURL stringByAppendingPathComponent:subPath];
@@ -275,7 +274,7 @@
     [self.AFRequestManager PUT:[RESTManAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failureBlock(error.localizedDescription);
+        failureBlock(operation, error);
     }];
     
 }
@@ -286,7 +285,7 @@
                           withID:(NSString *)rootID
                       parameters:(NSDictionary *)params
                          success:(void (^)(id responseData))successBlock
-                         failure:(void (^)(NSString *errorMessage))failureBlock
+                            failure:(void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock
 {
     NSString *subPath = [[self subPathForResource:rootType objectID:rootID] stringByAppendingPathComponent:[self subPathForResource:nestedType objectID:nestedID]];
     NSString *path = [RMBaseURL stringByAppendingPathComponent:subPath];
@@ -296,14 +295,14 @@
     [self.AFRequestManager PUT:[RESTManAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failureBlock(error.localizedDescription);
+        failureBlock(operation, error);
     }];
 }
 
 - (void)createObjectOfType:(RESOURCE_TYPE)type
                 parameters:(NSDictionary *)params
                    success:(void(^)(id responseData))successBlock
-                   failure:(void(^)(NSString *errorMessage))failureBlock
+                   failure:(void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock
 {
     NSString *subPath = [self stringForResource:type];
     NSString *path = [RMBaseURL stringByAppendingPathComponent:subPath];
@@ -313,7 +312,7 @@
     [self.AFRequestManager POST:[RESTManAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failureBlock(error.localizedDescription);
+        failureBlock(operation, error);
     }];
 }
 
@@ -322,7 +321,7 @@
                           withID:(NSString *)rootID
                       parameters:(NSDictionary *)params
                          success:(void(^)(id responseData))successBlock
-                         failure:(void(^)(NSString *errorMessage))failureBlock
+                         failure:(void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock
 {
     NSString *subPath = [[self subPathForResource:rootType objectID:rootID] stringByAppendingPathComponent:[self stringForResource:nestedType]];
     NSString *path = [RMBaseURL stringByAppendingPathComponent:subPath];
@@ -332,7 +331,7 @@
     [self.AFRequestManager POST:[RESTManAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failureBlock(error.localizedDescription);
+        failureBlock(operation, error);
     }];
 }
 
@@ -340,7 +339,7 @@
                     withID:(NSString *)objectID
                 parameters:(NSDictionary *)params
                    success:(void (^)(id responseData))successBlock
-                   failure:(void (^)(NSString *errorMessage))failureBlock
+                      failure:(void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock
 {
     NSString *subPath = [self subPathForResource:type objectID:objectID];
     NSString *path = [RMBaseURL stringByAppendingPathComponent:subPath];
@@ -350,7 +349,7 @@
     [self.AFRequestManager DELETE:[RESTManAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failureBlock(error.localizedDescription);
+        failureBlock(operation, error);
     }];
     
 }
@@ -361,8 +360,7 @@
                           withID:(NSString *)rootID
                       parameters:(NSDictionary *)params
                          success:(void (^)(id responseData))successBlock
-                         failure:(void (^)(NSString *errorMessage))failureBlock
-{
+                            failure:(void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock                             {
     NSString *subPath = [[self subPathForResource:rootType objectID:rootID] stringByAppendingPathComponent:[self subPathForResource:nestedType objectID:nestedID]];
     NSString *path = [RMBaseURL stringByAppendingPathComponent:subPath];
 
@@ -371,7 +369,7 @@
     [self.AFRequestManager DELETE:[RESTManAuthenticator authenticatedPathWithPath:path] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failureBlock(error.localizedDescription);
+        failureBlock(operation, error);
     }];
 }
 

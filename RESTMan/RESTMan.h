@@ -33,7 +33,7 @@
 + (void)getObjectsOfType:(RESOURCE_TYPE)type
               parameters:(NSDictionary *)params
                  success:(void(^)(id responseData))successBlock
-                 failure:(void(^)(NSString *errorMessage))failureBlock;
+                 failure:(void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock;
 
 
 /**
@@ -52,7 +52,7 @@
                         withID:(NSString *)rootID
                     parameters:(NSDictionary *)params
                        success:(void(^)(id responseData))successBlock
-                       failure:(void(^)(NSString *errorMessage))failureBlock;
+                       failure:(void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock;
 
 
 /**
@@ -69,7 +69,7 @@
                  withID:(NSString *)objectID
              parameters:(NSDictionary *)params
                 success:(void(^)(id responseData))successBlock
-                failure:(void(^)(NSString *errorMessage))failureBlock;
+                failure:(void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock;
 
 
 /**
@@ -90,7 +90,7 @@
                        withID:(NSString *)rootID
                    parameters:(NSDictionary *)params
                       success:(void(^)(id responseData))successBlock
-                      failure:(void(^)(NSString *errorMessage))failureBlock;
+                      failure:(void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock;
 
 
 /**
@@ -107,7 +107,7 @@
                     withID:(NSString *)objectID
                 parameters:(NSDictionary *)params
                    success:(void (^)(id responseData))successBlock
-                   failure:(void (^)(NSString *errorMessage))failureBlock;
+                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock;
 
 
 /**
@@ -128,7 +128,7 @@
                           withID:(NSString *)rootID
                       parameters:(NSDictionary *)params
                          success:(void (^)(id responseData))successBlock
-                         failure:(void (^)(NSString *errorMessage))failureBlock;
+                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock;
 
 
 /**
@@ -143,7 +143,7 @@
 + (void)createObjectOfType:(RESOURCE_TYPE)type
                 parameters:(NSDictionary *)params
                    success:(void(^)(id responseData))successBlock
-                   failure:(void(^)(NSString *errorMessage))failureBlock;
+                   failure:(void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock;
 
 
 /**
@@ -162,7 +162,7 @@
                           withID:(NSString *)rootID
                       parameters:(NSDictionary *)params
                          success:(void(^)(id responseData))successBlock
-                         failure:(void(^)(NSString *errorMessage))failureBlock;
+                         failure:(void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock;
 
 
 /**
@@ -179,7 +179,7 @@
                     withID:(NSString *)objectID
                 parameters:(NSDictionary *)params
                    success:(void (^)(id responseData))successBlock
-                   failure:(void (^)(NSString *errorMessage))failureBlock;
+                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock;
 
 
 /**
@@ -200,6 +200,6 @@
                           withID:(NSString *)rootID
                       parameters:(NSDictionary *)params
                          success:(void (^)(id responseData))successBlock
-                         failure:(void (^)(NSString *errorMessage))failureBlock;
+                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock;
 
 @end

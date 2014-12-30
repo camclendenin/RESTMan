@@ -7,8 +7,8 @@ RESTMan lets you easily interact with RESTful (GET, POST, PUT, DELETE) web APIs 
 [RESTMan getObjectOfType:BOOK withID:@"1234" parameters:nil success:^(id responseData) {
     // do something with the book.
     id book = [responseData objectForKey:@"book"];
-} failure:^(NSString *errorMessage) {
-    // handle error however you like.
+} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    // handle error just as you would when using AFNetworking...
 }];
 ```
 
@@ -63,7 +63,7 @@ This would allow to make the following call using RESTMan...
 ```objective-c
 [RESTMan createObjectOfType:SESSION parameters:loginCredentials success:^(id responseData) {
     // get token from response data, etc...
-} failure:^(NSString *errorMessage) {
+} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     // handle invalid credentials, etc...
 }];
 ```
@@ -92,7 +92,7 @@ Use the public methods in *RESTMan.h* to easily get what you need from your web 
 + (void)getObjectsOfType:(RESOURCE_TYPE)type
       withParameters:(NSDictionary *)params
              success:(void(^)(id responseData))successBlock
-             failure:(void(^)(NSString *errorMessage))failureBlock;
+             failure:(void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock;
 ````
 
 Check out [*RESTMan.h*](https://github.com/camclendenin/RESTMan/blob/master/RESTMan/RESTMan.h) too see all of the methods available to you and to see more documentation.
@@ -105,7 +105,6 @@ Check out [*RESTMan.h*](https://github.com/camclendenin/RESTMan/blob/master/REST
 ### TODOs
 
 - Cocoapods support
-- More robust failure blocks
 - Handling different types of authentication
 
 
