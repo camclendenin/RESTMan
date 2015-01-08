@@ -1,7 +1,7 @@
 RESTMan
 ============
 
-RESTMan lets you easily interact with RESTful (GET, POST, PUT, DELETE) web APIs by allowing you to work with **objects instead of URLs**. No messy in-line URLs to maintain.
+RESTMan lets you easily interact with RESTful (GET, POST, PUT, DELETE) web APIs by allowing you to reference **objects instead of URLs** within your code. No messy in-line URLs to maintain.
 
 ```objective-c
 [RESTMan getObjectOfType:BOOK withID:@"1234" parameters:nil success:^(id responseData) {
