@@ -1,14 +1,14 @@
 RESTMan
 ============
 
-RESTMan lets you easily interact with RESTful (GET, POST, PUT, DELETE) web APIs by allowing you to reference **objects instead of URLs** within your code. No messy in-line URLs to maintain.
+RESTMan lets you easily interact with RESTful (GET, POST, PUT, DELETE) web APIs by allowing you to reference **object type enums instead of URLs** within your code. No messy in-line URLs to maintain.
 
 ```objective-c
+// GET {YOUR_BASE_URL}/book/1234
 [RESTMan getObjectOfType:BOOK withID:@"1234" parameters:nil success:^(id responseData) {
-    // do something with the book.
-    id book = [responseData objectForKey:@"book"];
+    NSDictionary *book = responseData[@"book"];
 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    // handle error just as you would when using AFNetworking...
+    // handle error just as you would when using AFNetworking
 }];
 ```
 
@@ -25,7 +25,7 @@ Copy the RESTMan folder into your Xcode project (make sure the "Copy items..." b
 Go to the `Build Phases` tab for your target and add a `New Run Script Build Phase`
 
 ![Add Script](https://dl.dropbox.com/s/9cpy4nuhwihn67m/rest-machine-add-build-script.png)
-    
+
 Add the following text to the the script area...
 
     cd "${SRCROOT}/${PROJECT_NAME}/RESTMan/RESTMan"
@@ -57,7 +57,7 @@ The *first* part before the `#` defines the way you want to reference the object
 In addition, RESTMan can support different kinds of nested paths. For example, if your APIs path for login is something like `POST /auth/users/login`, where it is just a series of nested resources without IDs, you could do something like this.
 
     session#auth/users/login
-    
+
 This would allow to make the following call using RESTMan...
 
 ```objective-c
@@ -67,7 +67,7 @@ This would allow to make the following call using RESTMan...
     // handle invalid credentials, etc...
 }];
 ```
-    
+
 For nested paths that combine 2 resources, use the RESTMan class methods that accept *nested* and *root* object types. See the documentation in RESTMan.h for the details, or just jump right in and start using it bc it's awesome.
 
 
@@ -77,7 +77,7 @@ This script will automatically pull in your settings from `RESTMan.plist` and ge
 
 #### Authentication
 
-RESTMan lets you add your applications custom authentication logic via the RESTManAuthentication.h file. 
+RESTMan lets you add your applications custom authentication logic via the RESTManAuthentication.h file.
 To do this you will need to modify the implementation of the *authenticatedPath* method.
 
 ### Usage
