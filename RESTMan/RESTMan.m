@@ -385,7 +385,7 @@
     NSString *root = [self stringForResource:type];
     if (!objectID) {
         DLog(@"Missing root object id for %@", root);
-        return @"";
+        return root;
     } else {
         return [root stringByAppendingPathComponent:objectID];
     }
