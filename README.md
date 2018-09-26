@@ -1,3 +1,7 @@
+
+## This may seem obvious, but this framework is completely and totally abandoned. Look but don't touch.
+
+
 RESTMan
 ============
 
