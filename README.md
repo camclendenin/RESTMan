@@ -90,7 +90,7 @@ Import RESTMan wherever you need to make API calls.
 
     #import "RESTMan.h"
 
-Use the public methods in *RESTMan.h* to easily get what you need from your web service.
+Use the public methods in [*RESTMan.h*](https://github.com/camclendenin/RESTMan/blob/master/RESTMan/RESTMan.h) to easily get what you need from your web service.
 
 ```objective-c
 + (void)getObjectsOfType:(RESOURCE_TYPE)type
